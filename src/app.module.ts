@@ -16,7 +16,7 @@ import { upperDirectiveTransformer } from './common/directives/upper-case.direct
       driver: ApolloDriver,
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'), // code first 生成的schema文件
       sortSchema: true, // 排序,默认是按照module的顺序，开启后，按照字典顺序排序
-      transformSchema: (schema) => upperDirectiveTransformer(schema, 'upper'),
+      transformSchema: (schema) => upperDirectiveTransformer(schema, 'upper'), // 应用于整个schema
       installSubscriptionHandlers: true,
       buildSchemaOptions: {
         directives: [
