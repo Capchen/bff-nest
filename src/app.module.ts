@@ -10,8 +10,11 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 
 import { upperDirectiveTransformer } from './common/directives/upper-case.directive';
 
+import { AuthorsModule } from './business/authors/authors.module';
+
 @Module({
   imports: [
+    AuthorsModule,
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'), // code first 生成的schema文件
@@ -28,7 +31,7 @@ import { upperDirectiveTransformer } from './common/directives/upper-case.direct
       },
     }),
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  // controllers: [AppController],
+  // providers: [AppService],
 })
 export class AppModule {}

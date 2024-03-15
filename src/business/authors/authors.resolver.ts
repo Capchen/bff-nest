@@ -1,4 +1,11 @@
-import { Args, Parent, Query, ResolveField, Resolver } from '@nestjs/graphql';
+import {
+  Args,
+  Parent,
+  Query,
+  ResolveField,
+  Resolver,
+  Int,
+} from '@nestjs/graphql';
 import { Author } from './models/author.model';
 import { AuthorsService } from './authors.service';
 
@@ -6,7 +13,7 @@ import { AuthorsService } from './authors.service';
 export class AuthorsResolver {
   constructor(
     private authorsService: AuthorsService,
-    private postsService: PostsService,
+    // private postsService: PostsService,
   ) {}
 
   // @Query((returns) => [Author])
@@ -14,14 +21,16 @@ export class AuthorsResolver {
   //   return this.authorsService.findAll();
   // }
 
-  @Query((returns) => Author)
-  async author(@Args('id') id: number): Promise<Author> {
+  @Query(() => Author, { name: 'author' })
+  async getAuthor(
+    @Args('id', { type: () => Int }) id: number,
+  ): Promise<Author> {
     return this.authorsService.findOneById(id);
   }
 
-  @ResolveField()
-  async posts(@Parent() author: Author) {
-    const { id } = author;
-    return this.postsService.findAll({ id });
-  }
+  // @ResolveField('posts', (returns) => [Post])
+  // async getPosts(@Parent() author: Author) {
+  //   const { id } = author;
+  //   return this.postsService.findAll({ id });
+  // }
 }
